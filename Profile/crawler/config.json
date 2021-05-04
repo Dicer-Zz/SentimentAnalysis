@@ -1,0 +1,20 @@
+{
+    "user_id_list": ["2655024514"],
+    "filter": 1,
+    "since_date": "",
+    "start_page": 1,
+    "write_mode": ["csv", "json"],
+    "original_pic_download": 0,
+    "retweet_pic_download": 0,
+    "original_video_download": 0,
+    "retweet_video_download": 0,
+    "result_dir_name": 0,
+    "cookie": "your cookie",
+    "mysql_config": {
+        "host": "",
+        "port": 3306,
+        "user": "",
+        "password": "",
+        "charset": "utf8mb4"
+    }
+}
