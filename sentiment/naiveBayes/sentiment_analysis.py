@@ -1,5 +1,4 @@
 from bayes_analyzer import SentimentAnalyzer
-from utils import trim
 
 modelPath = './data/bayes.model'
 stopwordPath = './data/stopword.txt'
