@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import random
 import re
 
@@ -39,7 +40,7 @@ def load_corpus(csvFilePath, stopwordPath):
     # 数据读取
     df = pd.read_csv(csvFilePath)
     stopword = load_stopword(stopwordPath)
-    labels, reviews = df['label'], df['review']
+    labels, reviews = df['label'].to_list(), df['review'].to_list()
     trimedReviews = []
     for review in reviews:
         # 数据清洗
@@ -52,6 +53,9 @@ def load_corpus(csvFilePath, stopwordPath):
         trimedReviews.append(finalReview)
     return labels, trimedReviews
 
+def load_reviews(csvFilePath):
+    df = pd.read_csv(csvFilePath)
+    return df['label'], df['review']
 
 def load_stopword(filePath):
     """
@@ -70,3 +74,23 @@ def data_suffle(labels, reviews):
     random.shuffle(join)
     labels, reviews = zip(*join)
     return list(labels), list(reviews)
+
+def pre_trim(csvFilePath, stopwordPath):
+    """
+    预处理csv文本，并持久化
+    """
+    df = pd.read_csv(csvFilePath)
+    _, reviews = load_corpus(csvFilePath, stopwordPath)
+    for index in range(len(reviews)):
+        reviews[index] = ' '.join(reviews[index])
+    df['review'] = reviews
+    df.to_csv(csvFilePath[:-4] + 'Trimed.csv', index=False)
+
+if __name__ == '__main__':
+    # csvFilePath = '../../corpus/100k/all.csv'
+    # stopwordPath = './data/stopword.txt'
+    # pre_trim(csvFilePath, stopwordPath)
+
+    csvFilePath = '../../corpus/100k/sample200Trimed.csv'
+    _, reviews = load_reviews(csvFilePath)
+    print(reviews)
