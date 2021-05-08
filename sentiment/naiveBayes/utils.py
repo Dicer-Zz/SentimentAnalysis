@@ -12,6 +12,8 @@ def trim(text):
     使用re保证了一些本来可能会分开的表情图标不分开
     return: [str]
     """
+    if not isinstance(text, str):
+        return []
     text = re.sub("\{%.+?%\}", " ", text)           # 去除 {%xxx%} (地理定位, 微博话题等)
     # text = re.sub("@.+?( |$)", " ", text)           # 去除 @xxx (用户名)
     text = re.sub("@.+?( |:)", " ", text)           # 去除 @xxx (用户名)
@@ -86,11 +88,22 @@ def pre_trim(csvFilePath, stopwordPath):
     df['review'] = reviews
     df.to_csv(csvFilePath[:-4] + 'Trimed.csv', index=False)
 
+def filter(csvFilePath):
+    """
+    去掉评论中所有非中文字符
+    return: [str] str is spilted by space
+    """
+    df = pd.read_csv(csvFilePath)
+    reviews = df['review'].astype('str')
+    for index in range(len(reviews)):
+        reviews[index] = ' '.join(re.sub(r'[^\u4e00-\u9fa5]', '', reviews[index]))
+    df['review'] = reviews
+    df.to_csv(csvFilePath[:-4] + 'Chinese.csv', index=False)
+
 if __name__ == '__main__':
-    # csvFilePath = '../../corpus/100k/all.csv'
+    # csvFilePath = '../../corpus/5moods/test/virus_test_labeled.csv'
     # stopwordPath = './data/stopword.txt'
     # pre_trim(csvFilePath, stopwordPath)
 
-    csvFilePath = '../../corpus/100k/sample200Trimed.csv'
-    _, reviews = load_reviews(csvFilePath)
-    print(reviews)
+    csvFilePath = '../../corpus/5moods/train/usual_train.csv'
+    filter(csvFilePath)
