@@ -1,6 +1,7 @@
 import pickle
 import jieba
 import re
+import numpy as np
 
 class SentimentAnalyzer():
     def __init__(self, modelPath, stopwordPath, userDictPath):
@@ -58,7 +59,7 @@ class SentimentAnalyzer():
         # 清洗 并 分词
         reviews = [self.trim(review) for review in reviews]
         print(reviews)
-        tfidf = self.tfidftransformer.transform(self.vectorizer.transform(reviews))
+        tfidf = self.tfidftransformer.transform(self.vectorizer.transform([np.str_(review) for review in reviews]))
         pred = self.clf.predict_proba(tfidf)
         return pred
 

@@ -90,13 +90,16 @@ def pre_trim(csvFilePath, stopwordPath):
 
 def filter(csvFilePath):
     """
-    去掉评论中所有非中文字符
+    去掉评论中所有非中文字符以及用户名字
     return: [str] str is spilted by space
     """
     df = pd.read_csv(csvFilePath)
     reviews = df['review'].astype('str')
     for index in range(len(reviews)):
-        reviews[index] = ' '.join(re.sub(r'[^\u4e00-\u9fa5]', '', reviews[index]))
+        review = reviews[index]
+        review = re.sub("@.+?( |:)", " ", review)
+        review = re.sub(r'[^\u4e00-\u9fa5]', '', review)
+        reviews[index] = review
     df['review'] = reviews
     df.to_csv(csvFilePath[:-4] + 'Chinese.csv', index=False)
 

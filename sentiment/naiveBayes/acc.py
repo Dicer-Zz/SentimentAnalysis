@@ -1,5 +1,6 @@
 import time
 import pickle
+import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
@@ -29,12 +30,12 @@ print(reviews[:5], type(reviews), type(reviews[0]))
 time_start = time.time()
 
 vectorizer = CountVectorizer()
-vec_train = vectorizer.fit_transform(reviews_train)
+vec_train = vectorizer.fit_transform([np.str_(review) for review in reviews_train])
 clf = MultinomialNB().fit(vec_train, labels_train)
 
 print(f'Train Model Cost {time.time() - time_start:.4f} Sec')
 
-vec_test = vectorizer.transform(reviews_test)
+vec_test = vectorizer.transform([np.str_(review) for review in reviews_test])
 print(vec_test.shape, vec_train.shape)
 
 pred = clf.predict(vec_test)

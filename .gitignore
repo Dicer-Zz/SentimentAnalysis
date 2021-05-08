@@ -11,6 +11,7 @@ __pycache__/
 Myconfig.json
 /WeiboSentiment-master
 /douban_sentiment_analysis-master
+/LSTM-NLP-sentiment-analysis-main
 corpus
 .idea
 .vscode
