@@ -8,10 +8,17 @@ def trim(text):
     使用re保证了一些本来可能会分开的表情图标不分开
     return: [str]
     """
-    text = re.sub("\{%.+?%\}", " ", text)           # 去除 {%xxx%} (地理定位, 微博话题等)
-    # text = re.sub("@.+?( |$)", " ", text)           # 去除 @xxx (用户名)
-    text = re.sub("@.+?( |:)", " ", text)           # 去除 @xxx (用户名)
-    text = re.sub("【.+?】", " ", text)              # 去除 【xx】 (里面的内容通常都不是用户自己写的)
+    
+    # 去除 {%xxx%} (地理定位, 微博话题等)
+    text = re.sub("\{%.+?%\}", " ", text)
+
+    # 去除 @xxx (用户名)         
+    text = re.sub("@.+?( |:)", " ", text)
+
+    # 去除 【xx】 (里面的内容通常都不是用户自己写的) 
+    text = re.sub("【.+?】", " ", text)
+
+
     icons = re.findall("\[.+?\]", text)             # 提取出所有表情图标
     text = re.sub("\[.+?\]", "IconMark", text)      # 将文本中的图标替换为`IconMark`
 
@@ -45,7 +52,6 @@ def load_review(filePath):
     """
     S = pd.read_csv(filePath)['review']
     review = []
-    print(type(review))
     for k, v in S.iteritems():
         review.append(trim(v))
     return review

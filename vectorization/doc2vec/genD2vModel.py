@@ -1,20 +1,22 @@
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
-from utils import load_review
+from utils import load_reviews
 import time
 
-time_start = time.time()
+start = time.time()
 
-filePath = '../../corpus/100k/all.csv'
-review = load_review(filePath)
+filePath = '../../corpus/100k/allTrimed.csv'
+_, reviews = load_reviews(filePath)
+reviews = [review.split() for review in reviews]
 
-documents = [TaggedDocument(doc, [i]) for i, doc in enumerate(review)]
+cost = time.time() - start
+print(f'Loading reviews cost: {cost:.4f} Sec')
+start = time.time()
+
+documents = [TaggedDocument(doc, [i]) for i, doc in enumerate(reviews)]
 # print(document)
 model = Doc2Vec(documents, vector_size=20, window=2, min_count=5, epochs=10)
-model.save_word2vec_format('d2v.txt')
-model.save('d2v.model')
+model.save_word2vec_format('./data/d2v.txt')
+model.save('./data/d2v.model')
 
-# all.csv 78Sec vector_size=20, min_count=5, epochs=10, workers=8
-# all.csv 75Sec vector_size=20, min_count=5, epochs=10, workers=4
-# all.csv 69Sec vector_size=20, min_count=5, epochs=10, workers=2
-# all.csv 75Sec vector_size=20, min_count=5, epochs=10, workers=1
-print(f'Train Model Cost {time.time() - time_start:.4f} Sec')
+cost = time.time() - start
+print(f'Training model cost: {cost:.4f} Sec')

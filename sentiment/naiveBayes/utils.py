@@ -97,7 +97,7 @@ def filter(csvFilePath):
     reviews = df['review'].astype('str')
     for index in range(len(reviews)):
         review = reviews[index]
-        review = re.sub("@.+?( |:)", " ", review)
+        # review = re.sub("@.+?( |:)", " ", review)
         review = re.sub(r'[^\u4e00-\u9fa5]', '', review)
         reviews[index] = review
     df['review'] = reviews
