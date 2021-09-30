@@ -24,7 +24,7 @@ def trim(text):
 
     tokens = []
     # for k, w in enumerate(jieba.lcut(text)):
-    jieba.load_userdict('./data/user_dict.txt')
+    # jieba.load_userdict('./data/user_dict.txt')
     for w in jieba.cut(text):
         w = w.strip()
         if "IconMark" in w:                         # 将IconMark替换为原图标
@@ -108,5 +108,8 @@ if __name__ == '__main__':
     # stopwordPath = './data/stopword.txt'
     # pre_trim(csvFilePath, stopwordPath)
 
-    csvFilePath = '../../corpus/5moods/train/usual_train.csv'
-    filter(csvFilePath)
+    # csvFilePath = '../../corpus/5moods/train/usual_train.csv'
+    # filter(csvFilePath)
+
+    text = trim("焦作这么热，河南理工大学没有空调这合理吗？住在六楼，就跟桑拿房一样，半夜热到睡不着，好不容易睡着，一会儿又醒来一身汗，太难了。各位校友都咋挺过来的呀？我要热哭了")
+    print(text)

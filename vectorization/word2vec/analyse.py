@@ -26,6 +26,15 @@ def analyse():
     print(model.wv.most_similar(positive=[who]))
     who = model.wv['宝玉'] - model.wv['黛玉'] + model.wv['宝钗']
     print(model.wv.most_similar(positive=[who]))
+
+    who = model.wv['宝玉'] + model.wv['丫鬟']
+    print(model.wv.most_similar(positive=[who]))
+
+    who = model.wv['黛玉'] + model.wv['丫鬟']
+    print(model.wv.most_similar(positive=[who]))
+
+    who = model.wv['宝玉'] - model.wv['袭人'] + model.wv['黛玉']
+    print(model.wv.most_similar(positive=[who]))
     
 if __name__ == '__main__':
     analyse()

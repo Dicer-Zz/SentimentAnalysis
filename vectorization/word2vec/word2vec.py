@@ -19,7 +19,7 @@ def train_model():
     sentencePath = './data/cut_result.txt'
     modelPath = './data/hlm_model'
     sentence = word2vec.LineSentence(sentencePath)
-    model = word2vec.Word2Vec(sentence, vector_size=200, window=3)
+    model = word2vec.Word2Vec(sentence, vector_size=1000, window=5)
     model.save(modelPath)
     cost = time.time() - start
     print(f'Word2Vec model training cost: {cost:.4f}')

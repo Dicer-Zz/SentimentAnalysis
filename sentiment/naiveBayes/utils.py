@@ -34,7 +34,6 @@ def trim(text):
             tokens.append(w)
     return tokens
 
-
 def load_corpus(csvFilePath, stopwordPath):
     """
     加载语料库，并进行分词，数据清洗，去除停用词
